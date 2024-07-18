@@ -178,6 +178,7 @@ class Tracker():
         filtered_duels = {k: v for k, v in duels.items() if len(v) >= 28}
         final_duels = {}
         ball_tracks = tracks['ball'] 
+        print('filtered duels:', filtered_duels)
 
         for duel_key, frame_indices in filtered_duels.items():
             for frame_idx in frame_indices:
@@ -197,8 +198,10 @@ class Tracker():
                 final_duels[frame_idx][duel_key[1]] = bbox2
                 final_duels[frame_idx]['bbox'] = final_bbox
 
+        print('final duels', final_duels)
+
         real_duels = {}
-        duel_keys_final = []  # Ensure initialization here
+        duel_keys_final = []  
         for frame_idx, duel in final_duels.items():
             duel_bbox = duel['bbox']
             if self.has_ball_approaching(ball_tracks, frame_idx, duel_bbox):
@@ -209,7 +212,9 @@ class Tracker():
             duel_key = (list(duel.keys())[0], list(duel.keys())[1])
             if duel_key in duel_keys_final:
                 real_duels[frame_idx] = duel
-            
+        
+        print('real duels:', real_duels)
+        
         filtered_real_duels = {}
         combo_players = []
 
